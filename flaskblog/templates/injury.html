@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+	{% for post in posts.items %}
+		<img src="{{ url_for('static', filename='profile_pics/' + post.student.image_file) }}">
+		<a href="{{ url_for('user_posts', username=post.student.username) }}">Reporter: {{ post.student.username }}</a>
+		<p>Incident Time: {{ post.date_posted.strftime('%Y-%m-%d') }}</p>
+		<p><a href="{{ url_for('post', post_id=post.id) }}">Issue: {{ post.assignment }}</a></p>
+		<p>Description: {{ post.grade }}</p>
+		{% if post.attached_image %}
+			<p>Extra Note: {{ post.attached_image }}</p>
+		{% endif %}
+	{% endfor %}
+	{% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+		{% if page_num %}
+			<a href="{{ url_for('injury', page=page_num) }}">{{ page_num }}</a>
+		{% else %}
+			...
+		{% endif %}
+	{% endfor %}
+{% endblock %}

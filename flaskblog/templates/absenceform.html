@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block content %}
+	 <div>
+		<form method="POST" action="" enctype="multipart/form-data">
+			{{ form.hidden_tag() }}
+			<fieldset>
+				<legend>{{ legend }}</legend> 
+				<div>
+					{{ form.student.label }}
+					{{ form.student }}
+				</div>
+				<div>
+					{{ form.date.label }}
+					{{ form.date }}
+				</div>
+				<div>
+					{{ form.time1.label }}
+					{{ form.time1 }}
+				</div>
+				{% for subfield in form.timestate1 %}
+					<tr>
+					    <td>{{ subfield }}</td>
+					    <td>{{ subfield.label }}</td>
+					</tr>
+				{% endfor %}
+				<div>
+					{{ form.time2.label }}
+					{{ form.time2 }}
+				</div>
+				{% for subfield in form.timestate2 %}
+					<tr>
+					    <td>{{ subfield }}</td>
+					    <td>{{ subfield.label }}</td>
+					</tr>
+				{% endfor %}
+				<div>
+					{{ form.reason.label }}
+					{{ form.reason }}
+				</div>
+			</fieldset>
+			<div>
+				{{ form.submit }}
+			</div>
+		</form>
+	</div>
+{% endblock %}
