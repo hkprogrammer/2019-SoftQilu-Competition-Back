@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+	 <div>
+		<form method="POST" action="" enctype="multipart/form-data">
+			{{ form.hidden_tag() }}
+			<fieldset>
+				<legend>{{ legend }}</legend> 
+				<div>
+					{{ form.title.label }}
+					{{ form.title }}
+				</div>
+				{% for subfield in form.destination %}
+					<tr>
+					    <td>{{ subfield }}</td>
+					    <td>{{ subfield.label }}</td>
+					</tr>
+				{% endfor %}
+				{% for subfield in form.targetclub %}
+					<tr>
+					    <td>{{ subfield }}</td>
+					    <td>{{ subfield.label }}</td>
+					</tr>
+				{% endfor %}
+				<div>
+					{{ form.content.label }}
+					{{ form.content }}
+				</div>
+				<div>
+					{{ form.picture.label }}
+					{{ form.picture }}
+				</div>
+			</fieldset>
+			<div>
+				{{ form.submit }}
+			</div>
+		</form>
+	</div>
+{% endblock %}
