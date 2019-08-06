@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+	<p>Posts by {{ user.username }}</p>
+	{% for question in questions.items %}
+		{% if question.attached_image %}
+			<img src="{{ url_for('static', filename='profile_pics/' + question.attached_image) }}">
+		{% endif %}
+		<p>User: {{ question.user }}</p>
+		<p>Date Posted: {{ question.date_posted.strftime('%Y-%m-%d') }}</p>
+		<p><a href="{{ url_for('view_question', post_id=question.id) }}">Description: {{ question.content }}</a></p>
+	{% endfor %}
+	{% for page_num in questions.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+		{% if page_num %}
+			<a href="{{ url_for('user_posts', username=user.username, page=page_num) }}">{{ page_num }}</a>
+		{% endif %}
+	{% endfor %}
+	{% for grade in grades.items %}
+		<p>Teacher: {{ grade.teacher }}</p>
+		<p>Date Posted: {{ grade.date_posted.strftime('%Y-%m-%d') }}</p>
+		<p><a href="{{ url_for('view_grade', post_id=grade.id) }}">Assignment: {{ grade.assignment }}</a></p>
+		<p>Grade: {{ grade.grade }}</p>
+		<p> {{ grade.points }}/{{ grade.total_points }}</p>
+	{% endfor %}
+	{% for page_num in grades.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+		{% if page_num %}
+			<a href="{{ url_for('user_posts', username=user.username, page=page_num) }}">{{ page_num }}</a>
+		{% endif %}
+	{% endfor %}
+{% endblock %}

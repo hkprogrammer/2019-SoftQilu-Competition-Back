@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+	<p>News</p>
+	{% for post in posts.items %}
+		{% if post.attached_image %}
+			<img src="{{ url_for('static', filename='profile_pics/' + post.attached_image) }}">
+		{% endif %}
+		<p>Title: {{ post.title }}</p>
+		<p>Author: {{ post.user }}</p>
+		<p>Date Posted: {{ post.date_posted.strftime('%Y-%m-%d') }}</p>
+		<p><a href="{{ url_for('view_news', post_id=post.id) }}">Description: {{ post.content }}</a></p>
+	{% endfor %}
+	{% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+	{% endfor %}
+{% endblock %}
