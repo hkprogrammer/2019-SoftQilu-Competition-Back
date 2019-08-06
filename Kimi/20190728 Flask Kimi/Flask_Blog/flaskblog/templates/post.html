@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+		<img src="{{ url_for('static', filename='profile_pics/' + post.student.image_file) }}">
+		<a href="{{ url_for('account', username=post.student.username) }}">Reporter: {{ post.student.username }}</a>
+		<p>Title: {{ post.assignment }}</p>
+		<p>Date Posted: {{ post.date_posted.strftime('%Y-%m-%d') }}</p>
+		<p>Description: {{ post.grade }}</p>
+		{% if post.attached_image %}
+			<img src="{{ url_for('static', filename='attachment_pics/' + post.attached_image) }}">
+		{% endif %}
+		{% if current_user.level == "Faculty" %}
+			<a href="{{ url_for('delete_post', post_id=post.id) }}">Delete</a>
+		{% endif %}
+		{% if post.student == current_user %}
+			<a href="{{ url_for('update_post', post_id=post.id) }}">Update</a>
+		{% endif %}
+{% endblock %}
+

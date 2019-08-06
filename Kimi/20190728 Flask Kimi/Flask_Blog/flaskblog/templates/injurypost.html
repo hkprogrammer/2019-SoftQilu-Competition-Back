@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+		<img src="{{ url_for('static', filename='profile_pics/' + post.student.image_file) }}">
+		<a href="{{ url_for('user_posts', username=post.student.username) }}">Reporter: {{ post.student.username }}</a>
+		<p>Location: {{ post.assignment }}</p>
+		<p>Date Posted: {{ post.date_posted.strftime('%Y-%m-%d') }}</p>
+		<p>Type of Injury: {{ post.grade }}</p>
+		<p>Extra Notes: {{ post.attached_image }}</p>
+		{% if current_user.level == "Security" %}
+			<a href="{{ url_for('delete_post', post_id=post.id) }}">Delete</a>
+		{% endif %}
+{% endblock %}

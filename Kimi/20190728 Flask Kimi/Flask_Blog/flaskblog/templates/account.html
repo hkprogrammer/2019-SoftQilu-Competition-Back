@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h1>{{ current_user.username }}</h1>
+	<h1>{{ current_user.email }}</h1>
+	<img src="{{ image_file }}">
+	<div>
+		<form method="POST" action="" enctype="multipart/form-data">
+			{{ form.hidden_tag() }}
+			<fieldset>
+				<legend>Account Information</legend>
+				<div>
+					{{ form.username.label }}
+					{{ form.username }}
+				</div>
+				<div>
+					{{ form.picture.label }}
+					{{ form.picture }}
+				</div>
+			</fieldset>
+			<div>
+				{{ form.submit }}
+			</div>
+		</form>
+	</div>
+{% endblock %}
