@@ -145,10 +145,12 @@ def news_post(num=0): #num = 0 is a default
 			if form1.picture.data:
 				picture_file = save_picture_for_attachments(form1.picture.data)
 				post = News(title=form1.title.data, content=form1.content.data, user=current_user.username, attached_image=picture_file, newstype=form1.destination.data, user_id= current_user.id)
+			
 			else:
 				post = News(title=form1.title.data, content=form1.content.data, user=current_user.username, newstype=form1.destination.data, user_id= current_user.id)
 				db.session.add(post)
 				db.session.commit()
+
 			if form1.destination.data == 'Club News':
 				memory = Memory(value1=post.id, value2=post.user)
 				db.session.add(memory)

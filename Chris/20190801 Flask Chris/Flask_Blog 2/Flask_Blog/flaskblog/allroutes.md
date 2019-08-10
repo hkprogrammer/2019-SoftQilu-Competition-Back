@@ -1,7 +1,6 @@
 ###Routes
 /.
 /home
-/report
 /account/update
 /register
 /login
