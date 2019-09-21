@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+	 <div>
+		<form method="POST" action="2" enctype="multipart/form-data">
+			{{ form.hidden_tag() }}
+			<fieldset>
+				<legend>{{ legend }}</legend> 
+					<td>{{ form.assignment.label }}</td>
+					<td>{{ form.assignment }}</td>
+				<div>
+					{{ form.student.label }}
+					{{ form.student }}
+				</div>
+				<div>
+					{{ form.grade.label }}
+					{{ form.grade }}
+				</div>
+				<div>
+					{{ form.total_points.label }}
+					{{ form.total_points }}
+				</div>
+			</fieldset>
+			<div>
+				{{ form.submit }}
+			</div>
+		</form>
+	</div>
+{% endblock %}

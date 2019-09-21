@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+		<a href="{{ url_for('user_posts', username=post.user) }}">Student: {{ post.user }}</a>
+		<p>Assignment: {{ post.assignment }}</p>
+		<p>Date Posted: {{ post.date_posted.strftime('%Y-%m-%d') }}</p>
+		<p>Grade: {{ post.grade }}</p>
+		<p>Points: {{ post.points }}/{{ post.total_points }}</p>
+		{% if post.teacher == current_user.username %}
+			<a href="{{ url_for('update_grade', post_id=post.id) }}">Update</a>
+			<a href="{{ url_for('delete_grade', post_id=post.id) }}">Delete</a>
+		{% endif %}
+{% endblock %}

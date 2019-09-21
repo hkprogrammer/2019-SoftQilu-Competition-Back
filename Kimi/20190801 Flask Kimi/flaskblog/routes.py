@@ -8,7 +8,7 @@ from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, Post
 from flaskblog.models import User, Post, Comment, Clubs, membership
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
-
+## Use Chris'
 @app.route("/")
 @app.route("/home")
 @login_required
@@ -37,6 +37,7 @@ def save_picture_for_attachments(form_picture):
 	i.save(picture_path)
 	return picture_fn
 
+##?
 @app.route("/report")
 @login_required
 def report():
@@ -44,6 +45,7 @@ def report():
 	posts = Post.query.filter_by(posttype="Report").paginate(page=page, per_page=5)
 	return render_template('reports.html', posts=posts, title="Pending Reports")
 
+## Use Chris'
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
@@ -61,6 +63,7 @@ def account():
 	image_file = url_for('static', filename="profile_pics/" + current_user.image_file)
 	return render_template('account.html', title="Student Account", image_file=image_file, form=form)
 
+## Use Chris'
 @app.route("/register", methods=['GET', 'POST'])
 def register():
 	if current_user.is_authenticated:
@@ -78,7 +81,7 @@ def register():
 		return redirect(url_for('login'))
 	return render_template("register.html", title="Register", form=form)
 
-
+## Use Chris' Then Modify
 ### Modified by Hitoki 7/24/2019
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -133,11 +136,13 @@ def login():
 	return resp
 	# return render_template("login.html", title="Login", form=form)
 ###Modify Finish
+
+##
 @app.route("/logout")
 def logout():
 	logout_user()
 	return redirect(url_for('register'))
-
+## Keep
 @app.route("/post/new", methods=['GET', 'POST'])
 @login_required
 def new_post():
@@ -154,6 +159,7 @@ def new_post():
 		return redirect(url_for("report"))
 	return render_template("create_post.html", title="Issue Reporting", form=form, legend="File a Report")
 
+#Keep
 @app.route("/post/<int:post_id>", methods=['GET', 'POST'])
 @login_required
 def post(post_id):
@@ -192,6 +198,7 @@ def post(post_id):
 	###Modify End
 
 ###Modify by Hitoki 7/24/2019
+##Keep
 @app.route('/post/getNum' , methods=['GET','POST'])
 def getpostnum():
 
@@ -211,7 +218,7 @@ def getpostnum():
 
 
 ###Modify Finish
-
+##Keep
 @app.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
 def update_post(post_id):
@@ -231,7 +238,7 @@ def update_post(post_id):
 		form.title.data = post.assignment
 		form.content.data = post.grade
 	return render_template("create_post.html", title="Update Report", form=form, legend="Update Report")
-
+#Keep
 @app.route("/post/<int:post_id>/delete", methods=['GET', 'POST'])
 @login_required
 def delete_post(post_id):
@@ -248,7 +255,7 @@ def delete_post(post_id):
 		return redirect(url_for("injury"))
 	elif post.posttype == "Question":
 		return redirect(url_for("studybuddieshome"))
-
+## Might Consider Delete
 @app.route("/user/<string:username>")
 @login_required
 def user_posts(username):
@@ -256,7 +263,7 @@ def user_posts(username):
 	user = User.query.filter_by(username=username).first_or_404()
 	posts = Post.query.filter_by(student=user).paginate(page=page, per_page=5)
 	return render_template('user_posts.html', posts=posts, user=user)
-
+##Keep
 @app.route("/studybuddies/post", methods=['GET', 'POST'])
 @login_required
 def study_post():
@@ -271,7 +278,7 @@ def study_post():
 		db.session.commit()
 		return redirect(url_for("studybuddieshome"))
 	return render_template("file_question.html", title="Study Buddies", form=form, legend="Ask a Question")
-
+##Keep
 @app.route("/studybuddies")
 @login_required
 def studybuddieshome():
@@ -279,6 +286,7 @@ def studybuddieshome():
 	posts = Post.query.filter_by(posttype="Question").paginate(page=page, per_page=5)
 	return render_template('studybuddieshome.html', posts=posts, title="Student Questions")
 
+## Use Chris'
 @app.route("/mypueo/post", methods=['GET', 'POST'])
 @login_required
 def mypeo_post():
@@ -300,12 +308,12 @@ def mypeo_post():
 		db.session.commit()
 		return redirect(url_for("mypueo"))
 	return render_template("mypueopost.html", title="Post Accouncement", form=form, legend="Post Announcement")
-
+## Use Chris'
 @app.route("/mypueo", methods=['GET', 'POST'])
 @login_required
 def mypueo():
 	return render_template("mypueo.html", title="Mypueo")
-
+## Use Chris'
 @app.route("/mypueo/clubnews", methods=['GET', 'POST'])
 @login_required
 def clubnews():
@@ -320,28 +328,28 @@ def clubnews():
 		page = request.args.get('page', 1, type=int)
 		posts = Post.query.filter_by(newstype='Club News').paginate(page=page, per_page=5)
 		return render_template('clubnews.html', posts=posts, title="Club News")
-
+## Use Chris'
 @app.route("/mypueo/athleticnews", methods=['GET', 'POST'])
 @login_required
 def athleticnews():
 	page = request.args.get('page', 1, type=int)
 	posts = Post.query.filter_by(newstype='Athletic News').paginate(page=page, per_page=5)
 	return render_template('athleticnews.html', posts=posts, title="Athletic News")
-
+## Use Chris'
 @app.route("/mypueo/Activities", methods=['GET', 'POST'])
 @login_required
 def actvities():
 	page = request.args.get('page', 1, type=int)
 	posts = Post.query.filter_by(newstype='Athletics').paginate(page=page, per_page=5)
 	return render_template('activities.html', posts=posts, title="Club News")
-
+## Use Chris'
 @app.route("/mypueo/schoollunch", methods=['GET', 'POST'])
 @login_required
 def schoollunch():
 	page = request.args.get('page', 1, type=int)
 	posts = Post.query.filter_by(newstype='School Lunch').paginate(page=page, per_page=5)
 	return render_template('schoollunch.html', posts=posts, title="Club News")
-
+#Keep
 @app.route("/injury/post", methods=['GET', 'POST'])
 @login_required
 def injurypost():
@@ -355,14 +363,14 @@ def injurypost():
 		db.session.commit()
 		return redirect(url_for("injury"))
 	return render_template('injuryform.html', title="Injury Submission", legend="Injury Submission", form=form)
-
+#Keep
 @app.route("/injury", methods=['GET', 'POST'])
 @login_required
 def injury():
 	page = request.args.get('page', 1, type=int)
 	posts = Post.query.filter_by(posttype="Injury").paginate(page=page, per_page=5)
 	return render_template('injury.html', posts=posts, title="Injury Reports")
-
+#Keep
 @app.route("/absence", methods=['GET', 'POST'])
 @login_required
 def absence():
@@ -372,13 +380,13 @@ def absence():
 		mail.send(msg)
 		return redirect(url_for("home"))
 	return render_template('absenceform.html', form=form, legend='Absence Request', title='Absence Request')
-
+#Keep
 def send_reset_email(user):
 	token = user.get_reset_token()
 	msg = Message('Password Reset Request', sender='noreply@demo.com', recipients=[user.email])
 	msg.body = url_for('reset_token', token=token, _external=True)
 	mail.send(msg)
-
+#Keep
 @app.route("/reset_password", methods=['GET', 'POST'])
 def reset_request():
 	if current_user.is_authenticated:
@@ -389,7 +397,7 @@ def reset_request():
 		send_reset_email(user)
 		return redirect(url_for('login'))
 	return render_template('reset_request.html', title="Reset Password", form=form)
-
+#Keep
 @app.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
 	if current_user.is_authenticated:

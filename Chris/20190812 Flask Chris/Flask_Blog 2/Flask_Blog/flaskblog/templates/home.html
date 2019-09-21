@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block content %}
+	{% if newss %}
+		{% for news in newss.items %}
+			{% if news.attached_image %}
+				<img src="{{ url_for('static', filename='profile_pics/' + news.attached_image) }}">
+			{% endif %}
+			<a href="{{ url_for('user_posts', username=news.user) }}">Author: {{ news.user }}</a>
+			<p>Date Posted: {{ news.date_posted.strftime('%Y-%m-%d') }}</p>
+			<p><a href="{{ url_for('view_news', post_id=news.id) }}">Title: {{ news.title }}</a></p>
+			<p>Description: {{ news.content }}</p>
+		{% endfor %}
+		{% for page_num in newss.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+			{% if page_num %}
+				<a href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
+			{% else %}
+				...
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+	{% if questions %}
+		{% for question in questions.items %}
+			{% if question.attached_image %}
+				<img src="{{ url_for('static', filename='profile_pics/' + question.attached_image) }}">
+			{% endif %}
+			<a href="{{ url_for('user_posts', username=question.user) }}">Author: {{ question.user }}</a>
+			<p>Date Posted: {{ question.date_posted.strftime('%Y-%m-%d') }}</p>
+			<p><a href="{{ url_for('view_question', post_id=question.id) }}">Title: {{ question.title }}</a></p>
+			<p>Description: {{ question.content }}</p>
+		{% endfor %}
+		{% for page_num in questions.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+			{% if page_num %}
+				<a href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
+			{% else %}
+				...
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+	{% if reports %}
+		{% for reports in reports.items %}
+			{% if reports.attached_image %}
+				<img src="{{ url_for('static', filename='profile_pics/' + reports.attached_image) }}">
+			{% endif %}
+			<a href="{{ url_for('user_posts', username=reports.user) }}">Author: {{ reports.user }}</a>
+			<p>Date Posted: {{ reports.date_posted.strftime('%Y-%m-%d') }}</p>
+			<p><a href="{{ url_for('view_report', post_id=reports.id) }}">Title: {{ reports.issuetype }}</a></p>
+			<p>Description: {{ reports.content }}</p>
+		{% endfor %}
+		{% for page_num in reports.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+			{% if page_num %}
+				<a href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
+			{% else %}
+				...
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+{% endblock %}
